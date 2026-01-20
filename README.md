@@ -465,25 +465,5 @@ npm test
 - `xlsx` - Excel file processing
 - `html2canvas` - Screenshot/export
 
-## 🤝 Contributing
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 📧 Support
-
-For issues or questions:
-- Check the [Troubleshooting](#-troubleshooting) section
-- Open an issue on GitHub
-- Review API documentation above
-
----
-
-**Built with Node.js, Express, React, and MongoDB for Axis Bank Internet Banking**
+**Built with ❤️ for qWorks**
