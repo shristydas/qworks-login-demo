@@ -1,328 +1,286 @@
-# Axis Bank Internet Banking Application
+# Axis Bank Internet Banking - Frontend
 
-> **🚀 Want to get started quickly? See [QUICKSTART.md](QUICKSTART.md) for a 5-minute setup guide!**
+> **🚀 Quick Setup? See [QUICKSTART.md](../QUICKSTART.md) | Full Docs: [Main README](../README.md)**
 
-A complete full-stack banking application with authentication, password recovery, and Excel data visualization.
+A modern, responsive React-based frontend for the Axis Bank Internet Banking application featuring authentication, data visualization, and Excel file processing.
 
 ## 🚀 Features
 
-- ✅ **User Authentication** - JWT-based secure login/signup
-- ✅ **Password Recovery** - Email-based password reset flow
-- ✅ **Email Notifications** - Automated emails via Gmail SMTP
-- ✅ **Excel Upload** - Support for .xlsx, .xls, .csv files
-- ✅ **Auto Chart Generation** - Intelligent chart type selection
-- ✅ **Data Visualization** - Pie, Bar, and Line charts
-- ✅ **Download Charts** - Export graphs as PNG images
-- ✅ **Responsive Design** - Works on all devices
-- ✅ **Axis Bank Branding** - Professional burgundy theme
+- **User Authentication** - Secure login and signup with JWT tokens
+- **Password Recovery** - Email-based password reset functionality
+- **Excel Data Upload** - Support for .xlsx, .xls, and .csv files
+- **Smart Chart Generation** - Automatic chart type selection based on data size
+- **Data Visualization** - Interactive Pie, Bar, and Line charts
+- **Chart Export** - Download visualizations as PNG images
+- **Responsive Design** - Mobile-friendly interface
+- **Axis Bank Branding** - Professional burgundy theme matching Axis Bank identity
+
+## 🛠️ Tech Stack
+
+- **React 19.2.3** - UI framework
+- **Recharts 3.6.0** - Data visualization library
+- **XLSX 0.18.5** - Excel file processing
+- **html2canvas 1.4.1** - Chart export functionality
+- **React Testing Library** - Testing utilities
+- **Create React App** - Build tooling
 
 ## 📁 Project Structure
 
 ```
-axis-bank-app/
-├── backend/
-│   ├── server.js           # Express API server
-│   ├── package.json        # Backend dependencies
-│   └── .env               # Environment variables
-│
-└── frontend/
-    └── AxisBankApp.jsx    # React application
+axis-bank-frontend/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Header.jsx          # Navigation header
+│   │   │   └── Footer.jsx          # Footer component
+│   │   └── charts/
+│   │       ├── PieChartComponent.jsx
+│   │       ├── BarChartComponent.jsx
+│   │       └── LineChartComponent.jsx
+│   ├── pages/
+│   │   ├── LoginPage.jsx           # User login
+│   │   ├── SignUpPage.jsx          # User registration
+│   │   ├── ForgotPasswordPage.jsx  # Password reset request
+│   │   └── DashboardPage.jsx       # Main dashboard
+│   ├── services/
+│   │   └── authService.js          # API communication
+│   ├── utils/
+│   │   └── storage.js              # LocalStorage helpers
+│   ├── App.js                      # Main app component
+│   ├── App.test.js                 # App tests
+│   ├── index.js                    # Entry point
+│   ├── index.css                   # Global styles
+│   └── setupTests.js               # Test configuration
+├── package.json
+└── README.md
 ```
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Node.js** - Runtime environment
-- **Express** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM for MongoDB
-- **bcryptjs** - Password hashing
-- **jsonwebtoken** - JWT authentication
-- **nodemailer** - Email service
-- **cors** - Cross-origin resource sharing
-
-### Frontend
-- **React** - UI library
-- **Recharts** - Data visualization
-- **XLSX** - Excel file processing
 
 ## 📋 Prerequisites
 
-Before you begin, ensure you have:
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas account)
-- Gmail account (for sending emails)
+- **Node.js** v14 or higher
+- **npm** or **yarn**
+- **Backend API** running on port 5000 (see parent README.md)
 
-## 🔧 Installation & Setup
+## 🔧 Installation
 
-### Step 1: Install MongoDB
+### 1. Clone the Repository
 
-#### Option A: Local MongoDB
 ```bash
-# macOS
-brew tap mongodb/brew
-brew install mongodb-community
-brew services start mongodb-community
-
-# Ubuntu
-sudo apt install mongodb
-sudo systemctl start mongodb
-
-# Windows
-# Download from: https://www.mongodb.com/try/download/community
+git clone <repository-url>
+cd axis-bank-frontend
 ```
 
-#### Option B: MongoDB Atlas (Cloud - Recommended)
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a free account
-3. Create a new cluster
-4. Click "Connect" → "Connect your application"
-5. Copy the connection string
-
-### Step 2: Setup Gmail for Sending Emails
-
-1. **Enable 2-Factor Authentication** on your Google account:
-   - Go to [Google Account Security](https://myaccount.google.com/security)
-   - Enable 2-Step Verification
-
-2. **Create App Password**:
-   - Go to [App Passwords](https://myaccount.google.com/apppasswords)
-   - Select "Mail" and "Other (Custom name)"
-   - Name it "Axis Bank App"
-   - Copy the 16-character password (without spaces)
-
-### Step 3: Backend Setup
+### 2. Install Dependencies
 
 ```bash
-# Navigate to backend directory
-cd backend
-
-# Install dependencies
 npm install
-
-# Create .env file
-cp .env.example .env
 ```
 
-Edit the `.env` file with your credentials:
+### 3. Configure API URL (Optional)
 
-```env
-# MongoDB Configuration
-MONGODB_URI=mongodb://localhost:27017/axisbank
-# OR for MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/axisbank
+Create a `.env` file in the frontend directory if you need to change the API URL:
 
-# JWT Secret (Change this!)
-JWT_SECRET=your-super-secret-key-change-this-in-production
-
-# Gmail Configuration
-EMAIL_USER=your-gmail@gmail.com
-EMAIL_PASS=your-16-char-app-password
-
-# Frontend URL
-FRONTEND_URL=http://localhost:3000
-
-# Server Port
-PORT=5000
-```
-
-### Step 4: Start Backend Server
-
-```bash
-# Development mode with auto-reload
-npm run dev
-
-# OR Production mode
-npm start
-```
-
-You should see:
-```
-✅ MongoDB Connected
-🚀 Axis Bank API Server running on port 5000
-📧 Email service configured
-🔐 JWT authentication enabled
-```
-
-### Step 5: Frontend Setup
-
-```bash
-# Navigate to frontend directory (create React app if needed)
-npx create-react-app frontend
-cd frontend
-
-# Install dependencies
-npm install recharts xlsx
-
-# Copy the AxisBankApp.jsx component
-# Replace src/App.js with the content from AxisBankApp.jsx
-```
-
-If you want to change the API URL, create `.env` in frontend:
 ```env
 REACT_APP_API_URL=http://localhost:5000/api
 ```
 
-### Step 6: Start Frontend
+Default API URL is `http://localhost:5000/api` if not specified.
+
+### 4. Start Development Server
 
 ```bash
 npm start
 ```
 
-Frontend will open at `http://localhost:3000`
+The application will open at [http://localhost:3000](http://localhost:3000)
 
-## 🎮 Usage
+## 🎮 Available Scripts
 
-### Sign Up
-1. Click "Sign Up" on login page
-2. Enter email and password (min 6 characters)
-3. Automatically logged in
-4. Welcome email sent to your inbox
+### `npm start`
 
-### Login
-1. Enter your email and password
-2. Click "Login"
-3. Redirected to dashboard
+Runs the app in development mode.
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### Forgot Password
-1. Click "Forgot Password?"
-2. Enter your email
-3. Check inbox for reset link (expires in 1 hour)
-4. Click link and enter new password
-5. Confirmation email sent
+The page will reload when you make changes.
+You may also see any lint errors in the console.
 
-### Upload Excel & Generate Charts
-1. After logging in, you're on the dashboard
-2. Click "Choose File"
-3. Select Excel file (.xlsx, .xls, .csv)
-4. File must have minimum 2 columns
-5. Chart automatically generated based on data size:
-   - ≤5 rows → Pie Chart
-   - 6-10 rows → Bar Chart
-   - >10 rows → Line Chart
-6. Download chart as PNG
-7. View data in table format
-8. Clear and upload new file
+### `npm test`
 
-## 📊 Excel File Format
+Launches the test runner in interactive watch mode.
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Your Excel file should have at least 2 columns:
+### `npm run build`
 
-```
-Column 1 (Names/Labels) | Column 2 (Values/Numbers)
-------------------------|--------------------------
-Product A              | 1500
-Product B              | 2300
-Product C              | 1800
-```
+Builds the app for production to the `build` folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Example data files:
-- Sales data (Product, Revenue)
-- Student scores (Name, Marks)
-- Monthly expenses (Month, Amount)
-- Any category-value pairs
+The build is minified and the filenames include the hashes.
+Your app is ready to be deployed!
 
-## 🔐 API Endpoints
+Current bundle size: **338.41 kB** (gzipped)
 
-### Authentication
-```
-POST /api/auth/signup
-POST /api/auth/login
-POST /api/auth/forgot-password
-POST /api/auth/reset-password
-GET  /api/user/profile (Protected)
-```
+## 📱 Application Pages
 
-### Health Check
-```
-GET /api/health
-```
+### Login Page
+- Email and password authentication
+- "Forgot Password?" link
+- "Sign Up" navigation
+- Form validation
+- Error handling
+
+### Sign Up Page
+- New user registration
+- Email validation
+- Password strength requirements (min 6 characters)
+- Automatic login after signup
+- Welcome email sent
+
+### Forgot Password Page
+- Email-based password reset
+- Reset link sent via email
+- Link expires in 1 hour
+- Confirmation email after successful reset
+
+### Dashboard Page
+- Welcome message with user email
+- Excel file upload (.xlsx, .xls, .csv)
+- Automatic chart generation
+- Data table view
+- Chart export as PNG
+- Logout functionality
+
+## 📊 Chart Types
+
+The application automatically selects the appropriate chart type based on data size:
+
+- **Pie Chart** - ≤5 rows of data
+- **Bar Chart** - 6-10 rows of data
+- **Line Chart** - >10 rows of data
+
+All charts feature:
+- Axis Bank burgundy color scheme
+- Interactive tooltips
+- Responsive design
+- PNG export capability
 
 ## 🎨 Customization
 
-### Change Axis Bank Branding
+### Brand Colors
 
-Edit CSS variables in the React component:
-```css
---axis-burgundy: #97144D;
---axis-dark-burgundy: #6B0E36;
+Edit the color variables in your components:
+
+```javascript
+--axis-burgundy: #97144D
+--axis-dark-burgundy: #6B0E36
+--axis-light: #A83464
 ```
-
-### Modify Email Templates
-
-Edit email HTML in `backend/server.js`:
-- Welcome email
-- Password reset email
-- Confirmation email
 
 ### Chart Colors
 
-Modify the colors array in Dashboard component:
+Modify the colors array in chart components:
+
 ```javascript
 const colors = ['#97144D', '#6B0E36', '#A83464', '#C9528C', '#E07AAD'];
 ```
 
-## 🔒 Security Best Practices
+## 🧪 Testing
 
-1. **Change JWT Secret** in production
-2. **Use HTTPS** in production
-3. **Enable rate limiting** for API endpoints
-4. **Validate all inputs** on both client and server
-5. **Use environment variables** for sensitive data
-6. **Regular security updates** for dependencies
-7. **Implement CSRF protection**
-8. **Add request logging**
-
-## 📦 Deployment
-
-### Backend Deployment (Render/Heroku)
-
-1. Push code to GitHub
-2. Create account on Render.com or Heroku
-3. Create new Web Service
-4. Connect GitHub repository
-5. Set environment variables
-6. Deploy!
-
-### Frontend Deployment (Vercel/Netlify)
+Run tests:
 
 ```bash
-# Build for production
+npm test
+```
+
+Test coverage includes:
+- App component smoke test
+- Component rendering validation
+- Jest and React Testing Library setup
+
+## 🚀 Deployment
+
+### Build for Production
+
+```bash
 npm run build
+```
 
-# Deploy to Vercel
+### Deploy to Vercel
+
+```bash
 npx vercel
+```
 
-# OR Deploy to Netlify
+### Deploy to Netlify
+
+```bash
 npx netlify deploy --prod
 ```
 
-### MongoDB Atlas Setup
+### Environment Variables for Production
 
-Already covered in Step 1. Use the Atlas connection string in production.
+Set these in your deployment platform:
+
+```
+REACT_APP_API_URL=https://your-backend-api.com/api
+```
+
+## 🔐 Security Features
+
+- JWT token-based authentication
+- Secure token storage in localStorage
+- Automatic token validation
+- Protected routes
+- HTTPS required in production
+- Input validation
+- XSS protection via React
+
+## 📦 Dependencies
+
+### Main Dependencies
+
+- `react` - UI library
+- `react-dom` - DOM rendering
+- `recharts` - Chart library
+- `xlsx` - Excel file processing
+- `html2canvas` - Screenshot/export functionality
+
+### Dev Dependencies
+
+- `react-scripts` - Build tooling
+- `@testing-library/react` - Testing utilities
+- `@testing-library/jest-dom` - Jest matchers
+- `@testing-library/user-event` - User interaction testing
 
 ## 🐛 Troubleshooting
 
-### Email not sending?
-- Check Gmail App Password (16 characters, no spaces)
-- Verify 2FA is enabled
-- Check spam folder
-- Ensure EMAIL_USER and EMAIL_PASS are correct
+### API Connection Issues
 
-### MongoDB connection error?
-- Check if MongoDB is running: `mongod --version`
-- Verify MONGODB_URI in .env
-- For Atlas: Check network access whitelist
+- Verify backend is running on port 5000
+- Check CORS is enabled on backend
+- Ensure `REACT_APP_API_URL` is correct
 
-### CORS errors?
-- Ensure backend CORS is configured
-- Check FRONTEND_URL matches your React app URL
-- Verify API_BASE_URL in React component
+### Chart Not Displaying
 
-### Charts not displaying?
-- Verify Excel file has 2+ columns
+- Verify Excel file has at least 2 columns
 - Check browser console for errors
-- Ensure recharts is installed
+- Ensure data is in correct format (labels, values)
+
+### File Upload Errors
+
+- Supported formats: .xlsx, .xls, .csv
+- Minimum 2 columns required
+- Maximum file size: 5MB
+
+### Build Warnings
+
+The application may show ESLint warnings for:
+- React Hook dependencies
+- Anchor tags with `href="#"`
+
+These are non-critical and don't affect functionality.
 
 ## 🤝 Contributing
 
@@ -336,20 +294,21 @@ Already covered in Step 1. Use the Atlas connection string in production.
 
 This project is licensed under the MIT License.
 
+## 🔗 Related Documentation
+
+- [Main Project README](../README.md) - Full project documentation
+- [Backend Setup](../README.md#backend-setup) - API server configuration
+- [Create React App Documentation](https://facebook.github.io/create-react-app/docs/getting-started)
+- [Recharts Documentation](https://recharts.org/)
+- [React Documentation](https://react.dev/)
+
 ## 📧 Support
 
 For issues or questions:
+- Check the [Troubleshooting](#-troubleshooting) section
 - Open an issue on GitHub
-- Email: support@example.com
-
-## 🎉 Acknowledgments
-
-- Axis Bank for brand inspiration
-- React community
-- Node.js ecosystem
-- MongoDB team
-- Recharts library
+- Review the main project README
 
 ---
 
-**Made with ❤️ for Axis Bank Internet Banking**
+**Built with React for Axis Bank Internet Banking**
