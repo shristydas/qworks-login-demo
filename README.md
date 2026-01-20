@@ -1,12 +1,20 @@
-# Axis Bank Internet Banking - Frontend
+# Axis Bank Internet Banking - Full Stack Application
 
-> **🚀 Quick Setup? See [QUICKSTART.md](../QUICKSTART.md) | Full Docs: [Main README](../README.md)**
-
-A modern, responsive React-based frontend for the Axis Bank Internet Banking application featuring authentication, data visualization, and Excel file processing.
+A modern, full-stack internet banking application featuring secure authentication, data visualization, and Excel file processing capabilities.
 
 ## 🚀 Features
 
-- **User Authentication** - Secure login and signup with JWT tokens
+### Backend Features
+- **User Authentication** - JWT-based authentication system
+- **Password Management** - Secure password hashing with bcrypt
+- **Password Recovery** - Email-based password reset with expiring tokens
+- **Email Notifications** - Welcome emails and password reset emails
+- **RESTful API** - Clean API architecture with Express.js
+- **MongoDB Integration** - Mongoose ODM for data management
+- **Security** - CORS enabled, environment-based configuration
+
+### Frontend Features
+- **User Authentication** - Secure login and signup interface
 - **Password Recovery** - Email-based password reset functionality
 - **Excel Data Upload** - Support for .xlsx, .xls, and .csv files
 - **Smart Chart Generation** - Automatic chart type selection based on data size
@@ -17,6 +25,17 @@ A modern, responsive React-based frontend for the Axis Bank Internet Banking app
 
 ## 🛠️ Tech Stack
 
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js 4.18.2** - Web framework
+- **MongoDB** - Database
+- **Mongoose 7.5.0** - ODM for MongoDB
+- **JWT** - Authentication tokens
+- **Bcrypt.js** - Password hashing
+- **Nodemailer** - Email service
+- **CORS** - Cross-origin resource sharing
+
+### Frontend
 - **React 19.2.3** - UI framework
 - **Recharts 3.6.0** - Data visualization library
 - **XLSX 0.18.5** - Excel file processing
@@ -27,34 +46,49 @@ A modern, responsive React-based frontend for the Axis Bank Internet Banking app
 ## 📁 Project Structure
 
 ```
-axis-bank-frontend/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── components/
-│   │   ├── layout/
-│   │   │   ├── Header.jsx          # Navigation header
-│   │   │   └── Footer.jsx          # Footer component
-│   │   └── charts/
-│   │       ├── PieChartComponent.jsx
-│   │       ├── BarChartComponent.jsx
-│   │       └── LineChartComponent.jsx
-│   ├── pages/
-│   │   ├── LoginPage.jsx           # User login
-│   │   ├── SignUpPage.jsx          # User registration
-│   │   ├── ForgotPasswordPage.jsx  # Password reset request
-│   │   └── DashboardPage.jsx       # Main dashboard
-│   ├── services/
-│   │   └── authService.js          # API communication
-│   ├── utils/
-│   │   └── storage.js              # LocalStorage helpers
-│   ├── App.js                      # Main app component
-│   ├── App.test.js                 # App tests
-│   ├── index.js                    # Entry point
-│   ├── index.css                   # Global styles
-│   └── setupTests.js               # Test configuration
-├── package.json
+axis-bank-internet-banking/
+├── config/
+│   ├── database.js              # MongoDB connection
+│   └── email.js                 # Email configuration
+├── controllers/
+│   ├── authController.js        # Authentication logic
+│   └── userController.js        # User management
+├── middleware/
+│   └── authMiddleware.js        # JWT verification
+├── models/
+│   └── User.js                  # User schema
+├── routes/
+│   ├── authRoutes.js            # Authentication endpoints
+│   └── userRoutes.js            # User endpoints
+├── utils/
+│   └── emailTemplates.js        # Email HTML templates
+├── axis-bank-frontend/          # React frontend
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   │   ├── Header.jsx
+│   │   │   │   └── Footer.jsx
+│   │   │   └── charts/
+│   │   │       ├── PieChartComponent.jsx
+│   │   │       ├── BarChartComponent.jsx
+│   │   │       └── LineChartComponent.jsx
+│   │   ├── pages/
+│   │   │   ├── LoginPage.jsx
+│   │   │   ├── SignUpPage.jsx
+│   │   │   ├── ForgotPasswordPage.jsx
+│   │   │   └── DashboardPage.jsx
+│   │   ├── services/
+│   │   │   └── authService.js
+│   │   ├── utils/
+│   │   │   └── storage.js
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+├── server.js                    # Main server file
+├── package.json                 # Backend dependencies
+├── .env                         # Environment variables
+├── .gitignore
 └── README.md
 ```
 
@@ -62,89 +96,208 @@ axis-bank-frontend/
 
 - **Node.js** v14 or higher
 - **npm** or **yarn**
-- **Backend API** running on port 5000 (see parent README.md)
+- **MongoDB** installed and running locally (or MongoDB Atlas account)
+- **Gmail account** with App Password (for email functionality)
 
 ## 🔧 Installation
 
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd axis-bank-frontend
+git clone https://github.com/shristydas/qworks-login-demo.git
+cd qworks-login-demo
 ```
 
-### 2. Install Dependencies
+### 2. Backend Setup
+
+#### Install Backend Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configure API URL (Optional)
+#### Configure Environment Variables
 
-Create a `.env` file in the frontend directory if you need to change the API URL:
+Create a `.env` file in the root directory:
+
+```env
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017/axisbank
+
+# JWT Secret (Change this in production!)
+JWT_SECRET=your-super-secret-jwt-key-change-in-production
+
+# Gmail Configuration for Sending Emails
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+
+# Frontend URL (for email links)
+FRONTEND_URL=http://localhost:3000
+
+# Server Port
+PORT=5000
+```
+
+**Important**: For Gmail setup:
+1. Enable 2-Factor Authentication on your Google Account
+2. Go to [Google App Passwords](https://myaccount.google.com/apppasswords)
+3. Create a new App Password for "Mail"
+4. Use the 16-character password as `EMAIL_PASS`
+
+#### Start MongoDB
+
+Make sure MongoDB is running:
+
+```bash
+# macOS (using Homebrew)
+brew services start mongodb-community
+
+# Windows
+net start MongoDB
+
+# Linux
+sudo systemctl start mongod
+```
+
+#### Start Backend Server
+
+```bash
+# Development mode with auto-reload
+npm run dev
+
+# Production mode
+npm start
+```
+
+Backend will run on [http://localhost:5000](http://localhost:5000)
+
+### 3. Frontend Setup
+
+#### Navigate to Frontend Directory
+
+```bash
+cd axis-bank-frontend
+```
+
+#### Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+#### Configure Frontend Environment (Optional)
+
+Create a `.env` file in the `axis-bank-frontend` directory:
 
 ```env
 REACT_APP_API_URL=http://localhost:5000/api
 ```
 
-Default API URL is `http://localhost:5000/api` if not specified.
-
-### 4. Start Development Server
+#### Start Frontend Development Server
 
 ```bash
 npm start
 ```
 
-The application will open at [http://localhost:3000](http://localhost:3000)
+Frontend will run on [http://localhost:3000](http://localhost:3000)
 
 ## 🎮 Available Scripts
 
-### `npm start`
+### Backend Scripts
 
-Runs the app in development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+npm start          # Start server in production mode
+npm run dev        # Start server with nodemon (auto-reload)
+```
 
-The page will reload when you make changes.
-You may also see any lint errors in the console.
+### Frontend Scripts
 
-### `npm test`
+```bash
+npm start          # Start development server (port 3000)
+npm test           # Run tests
+npm run build      # Build for production
+```
 
-Launches the test runner in interactive watch mode.
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔌 API Endpoints
 
-### `npm run build`
+### Authentication Routes (`/api/auth`)
 
-Builds the app for production to the `build` folder.
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/auth/signup` | Register new user | No |
+| POST | `/api/auth/login` | Login user | No |
+| POST | `/api/auth/forgot-password` | Request password reset | No |
+| POST | `/api/auth/reset-password/:token` | Reset password with token | No |
 
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
+### User Routes (`/api/user`)
 
-Current bundle size: **338.41 kB** (gzipped)
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/user/profile` | Get user profile | Yes (JWT) |
+
+### Health Check
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/health` | Check API status | No |
+
+### Example API Requests
+
+#### Signup
+
+```bash
+POST /api/auth/signup
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+#### Login
+
+```bash
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+#### Get Profile
+
+```bash
+GET /api/user/profile
+Authorization: Bearer <your-jwt-token>
+```
 
 ## 📱 Application Pages
 
-### Login Page
+### Login Page (`/login`)
 - Email and password authentication
 - "Forgot Password?" link
 - "Sign Up" navigation
 - Form validation
 - Error handling
 
-### Sign Up Page
+### Sign Up Page (`/signup`)
 - New user registration
 - Email validation
 - Password strength requirements (min 6 characters)
 - Automatic login after signup
 - Welcome email sent
 
-### Forgot Password Page
+### Forgot Password Page (`/forgot-password`)
 - Email-based password reset
 - Reset link sent via email
 - Link expires in 1 hour
 - Confirmation email after successful reset
 
-### Dashboard Page
+### Dashboard Page (`/dashboard`)
 - Welcome message with user email
 - Excel file upload (.xlsx, .xls, .csv)
 - Automatic chart generation
@@ -161,126 +314,156 @@ The application automatically selects the appropriate chart type based on data s
 - **Line Chart** - >10 rows of data
 
 All charts feature:
-- Axis Bank burgundy color scheme
+- Axis Bank burgundy color scheme (#97144D)
 - Interactive tooltips
 - Responsive design
 - PNG export capability
 
-## 🎨 Customization
+## 🔐 Security Features
 
-### Brand Colors
-
-Edit the color variables in your components:
-
-```javascript
---axis-burgundy: #97144D
---axis-dark-burgundy: #6B0E36
---axis-light: #A83464
-```
-
-### Chart Colors
-
-Modify the colors array in chart components:
-
-```javascript
-const colors = ['#97144D', '#6B0E36', '#A83464', '#C9528C', '#E07AAD'];
-```
-
-## 🧪 Testing
-
-Run tests:
-
-```bash
-npm test
-```
-
-Test coverage includes:
-- App component smoke test
-- Component rendering validation
-- Jest and React Testing Library setup
+- **Password Hashing** - Bcrypt with salt rounds
+- **JWT Authentication** - Secure token-based auth
+- **Token Expiration** - Password reset tokens expire in 1 hour
+- **Environment Variables** - Sensitive data in .env files
+- **CORS Protection** - Configured for specific origins
+- **Input Validation** - Server-side validation
+- **XSS Protection** - React's built-in protection
+- **MongoDB Injection Prevention** - Mongoose schema validation
 
 ## 🚀 Deployment
 
-### Build for Production
+### Backend Deployment
+
+#### Deploy to Heroku
 
 ```bash
+# Install Heroku CLI
+heroku login
+heroku create axis-bank-api
+
+# Set environment variables
+heroku config:set MONGODB_URI=your-mongodb-uri
+heroku config:set JWT_SECRET=your-secret
+heroku config:set EMAIL_USER=your-email
+heroku config:set EMAIL_PASS=your-password
+heroku config:set FRONTEND_URL=your-frontend-url
+
+# Deploy
+git push heroku main
+```
+
+#### Deploy to Railway/Render
+
+1. Connect your GitHub repository
+2. Set environment variables in the dashboard
+3. Deploy automatically on push
+
+### Frontend Deployment
+
+#### Build for Production
+
+```bash
+cd axis-bank-frontend
 npm run build
 ```
 
-### Deploy to Vercel
+#### Deploy to Vercel
 
 ```bash
-npx vercel
+npx vercel --prod
 ```
 
-### Deploy to Netlify
+#### Deploy to Netlify
 
 ```bash
-npx netlify deploy --prod
+npx netlify deploy --prod --dir=build
 ```
 
 ### Environment Variables for Production
 
-Set these in your deployment platform:
+**Backend:**
+- `MONGODB_URI` - Production MongoDB connection string
+- `JWT_SECRET` - Strong secret key
+- `EMAIL_USER` - Production email
+- `EMAIL_PASS` - App password
+- `FRONTEND_URL` - Production frontend URL
+- `PORT` - Server port (usually provided by hosting)
 
+**Frontend:**
+- `REACT_APP_API_URL` - Production backend API URL
+
+## 🐛 Troubleshooting
+
+### Backend Issues
+
+#### MongoDB Connection Error
+- Ensure MongoDB is running
+- Check `MONGODB_URI` in `.env`
+- Verify network connectivity
+- Check MongoDB credentials
+
+#### Email Not Sending
+- Verify Gmail App Password is correct
+- Enable 2FA on Google Account
+- Check `EMAIL_USER` and `EMAIL_PASS` in `.env`
+- Check Gmail security settings
+
+#### JWT Errors
+- Ensure `JWT_SECRET` is set in `.env`
+- Check token expiration
+- Verify Authorization header format: `Bearer <token>`
+
+### Frontend Issues
+
+#### API Connection Issues
+- Verify backend is running on port 5000
+- Check CORS is enabled on backend
+- Ensure `REACT_APP_API_URL` is correct
+- Check browser console for errors
+
+#### Chart Not Displaying
+- Verify Excel file has at least 2 columns
+- Check data format (labels, values)
+- Ensure file size is under 5MB
+
+#### File Upload Errors
+- Supported formats: .xlsx, .xls, .csv
+- Minimum 2 columns required
+- Check file permissions
+
+## 🧪 Testing
+
+### Backend Testing
+
+```bash
+# Add test scripts to package.json
+npm test
 ```
-REACT_APP_API_URL=https://your-backend-api.com/api
+
+### Frontend Testing
+
+```bash
+cd axis-bank-frontend
+npm test
 ```
-
-## 🔐 Security Features
-
-- JWT token-based authentication
-- Secure token storage in localStorage
-- Automatic token validation
-- Protected routes
-- HTTPS required in production
-- Input validation
-- XSS protection via React
 
 ## 📦 Dependencies
 
-### Main Dependencies
+### Backend Dependencies
+- `express` - Web framework
+- `mongoose` - MongoDB ODM
+- `bcryptjs` - Password hashing
+- `jsonwebtoken` - JWT generation/verification
+- `nodemailer` - Email service
+- `cors` - CORS middleware
+- `dotenv` - Environment variables
 
+### Frontend Dependencies
 - `react` - UI library
 - `react-dom` - DOM rendering
 - `recharts` - Chart library
 - `xlsx` - Excel file processing
-- `html2canvas` - Screenshot/export functionality
-
-### Dev Dependencies
-
-- `react-scripts` - Build tooling
-- `@testing-library/react` - Testing utilities
-- `@testing-library/jest-dom` - Jest matchers
-- `@testing-library/user-event` - User interaction testing
-
-## 🐛 Troubleshooting
-
-### API Connection Issues
-
-- Verify backend is running on port 5000
-- Check CORS is enabled on backend
-- Ensure `REACT_APP_API_URL` is correct
-
-### Chart Not Displaying
-
-- Verify Excel file has at least 2 columns
-- Check browser console for errors
-- Ensure data is in correct format (labels, values)
-
-### File Upload Errors
-
-- Supported formats: .xlsx, .xls, .csv
-- Minimum 2 columns required
-- Maximum file size: 5MB
-
-### Build Warnings
-
-The application may show ESLint warnings for:
-- React Hook dependencies
-- Anchor tags with `href="#"`
-
-These are non-critical and don't affect functionality.
+- `html2canvas` - Screenshot/export
 
 ## 🤝 Contributing
 
@@ -294,21 +477,13 @@ These are non-critical and don't affect functionality.
 
 This project is licensed under the MIT License.
 
-## 🔗 Related Documentation
-
-- [Main Project README](../README.md) - Full project documentation
-- [Backend Setup](../README.md#backend-setup) - API server configuration
-- [Create React App Documentation](https://facebook.github.io/create-react-app/docs/getting-started)
-- [Recharts Documentation](https://recharts.org/)
-- [React Documentation](https://react.dev/)
-
 ## 📧 Support
 
 For issues or questions:
 - Check the [Troubleshooting](#-troubleshooting) section
 - Open an issue on GitHub
-- Review the main project README
+- Review API documentation above
 
 ---
 
-**Built with React for Axis Bank Internet Banking**
+**Built with Node.js, Express, React, and MongoDB for Axis Bank Internet Banking**
